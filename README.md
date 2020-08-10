@@ -475,19 +475,23 @@ new Compiler(options).run();
 ```
 
 此时打开浏览器：
+
 <img width="434" alt="forestpack演示" src="https://user-images.githubusercontent.com/26785201/89748849-e57a5b80-daf7-11ea-8358-6d8960d14d2e.png">
 
 如你所愿，得到了我们预期的结果～
+
 ![表情13](https://user-images.githubusercontent.com/26785201/89748832-d0053180-daf7-11ea-8adb-76ec8fd5aa8d.jpg)
 
 ## 总结
 
 通过对`webpack`构建流程的分析以及实现了一个简易的`forestpack`，相信你对`webpack`的构建原理已经有了一个清晰的认知！（当然，这里的`forestpack`和`webpack`相比还很弱很弱，，，，）
+
 ![表情14](https://user-images.githubusercontent.com/26785201/89748837-d7c4d600-daf7-11ea-9b2d-cf6c0e93198f.gif)
 
 ## 参考
 
 本文是看过极客时间程柳锋老师的「玩转 webpack」课程后整理的。这里也十分推荐大家去学习这门课程～
+
 ![表情15](https://user-images.githubusercontent.com/26785201/89748843-deebe400-daf7-11ea-9c44-da39d1dfa8cf.jpg)
 
 ## ❤️ 爱心三连击
