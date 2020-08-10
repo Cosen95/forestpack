@@ -3,12 +3,13 @@
 前一段时间我把`webpack`源码大概读了一遍，`webpack` 到`4.x`版本后，其源码已经比较庞大，对各种开发场景进行了高度抽象，阅读成本也愈发昂贵。
 
 过度分析源码对于大家并没有太大的帮助。本文主要是想通过分析`webpack`的构建流程以及实现一个简单的`webpack`来让大家对`webpack`的内部原理有一个大概的了解。（保证能看懂，不懂你打我 🙈）
-![](https://imgkr2.cn-bj.ufileos.com/149a5f7e-08e3-4681-b3fd-76ab4e085761.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=0u7YWTEYuEBkSCK6qCpj2O7KbKs%253D&Expires=1596960593)
+![表情01](https://user-images.githubusercontent.com/26785201/89748662-db0b9200-daf6-11ea-97f7-2362b63579fd.gif)
 
 ## webpack 构建流程分析
 
 首先，无须多言，上图～
-![](https://imgkr2.cn-bj.ufileos.com/4419ad0f-f458-4254-b1c0-36e235c4b943.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=ZGCvg6PRQU5HxRltkD5OKLX8Ks4%253D&Expires=1596859272)
+![webpack流程图](https://user-images.githubusercontent.com/26785201/89747816-fe344280-daf2-11ea-820a-6a1a99e34f14.png)
+
 `webpack` 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：首先会从配置文件和 `Shell` 语句中读取与合并参数，并初始化需要使用的插件和配置插件等执行环境所需要的参数；初始化完成后会调用`Compiler`的`run`来真正启动`webpack`编译构建过程，`webpack`的构建流程包括`compile`、`make`、`build`、`seal`、`emit`阶段，执行完这些阶段就完成了构建过程。
 
 ### 初始化
@@ -44,7 +45,7 @@
 在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
 
 分析完构建流程，下面让我们自己动手实现一个简易的`webpack`吧～
-![](https://imgkr2.cn-bj.ufileos.com/b36095fe-974b-4ee7-8d4b-52050dfb915b.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=4PYKnhpZNQ%252BFv%252Ft6hLlI0f5iex4%253D&Expires=1596960846)
+![表情02](https://user-images.githubusercontent.com/26785201/89748678-f1195280-daf6-11ea-82b5-85d62402d6c6.jpg)
 
 ## 实现一个简易的 webpack
 
@@ -86,7 +87,7 @@
 #### 先完成“造轮子”前 30%的代码
 
 项目搞起来了，但似乎还少点东西～～
-![](https://imgkr2.cn-bj.ufileos.com/7d3953fe-2c50-45cd-a123-97c2c3bd91b8.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=JbOSS4fcLN3DUD5mlcji%252BEoF6No%253D&Expires=1596961059)
+![表情03](https://user-images.githubusercontent.com/26785201/89748688-fd051480-daf6-11ea-84a7-7d9a2fa50462.jpg)
 
 对了！基础的文件我们需要先完善下：`forstpack.config.js`和`src`。
 
@@ -105,7 +106,7 @@ module.exports = {
 ```
 
 内容很简单，定义一下入口、出口（你这也太简单了吧！！别急，慢慢来嘛）
-![](https://imgkr2.cn-bj.ufileos.com/af4c4c38-4eb7-4482-888a-fa1f664a0e6d.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=r6JWZqps0uGSQy0D8kYHI3%252FwWVA%253D&Expires=1596961198)
+![表情04](https://user-images.githubusercontent.com/26785201/89748693-068e7c80-daf7-11ea-8e8e-f7bde2f5e214.jpg)
 
 其次是`src`，这里在`src`目录下定义了两个文件：
 
@@ -127,7 +128,7 @@ document.write(greeting("森林"));
 ```
 
 ok，到这里我们已经把需要准备的工作都完成了。（问：为什么这么基础？答：当然要基础了，我们的核心是“造轮子”！！）
-![](https://imgkr2.cn-bj.ufileos.com/3228f76d-f998-41cd-aff5-2898dabba038.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=RqmNFby94ZRQ4Df%252BVwXeG%252Bh2XX8%253D&Expires=1596961329)
+![表情05](https://user-images.githubusercontent.com/26785201/89748699-11491180-daf7-11ea-85b1-697b1df02905.jpg)
 
 ### 梳理下逻辑
 
@@ -136,7 +137,7 @@ ok，到这里我们已经把需要准备的工作都完成了。（问：为什
 `Q`: 我们要做什么？
 
 `A`: 做一个比`webpack`更强的`super webpack`（不好意思，失态了，一不小心说出了我的心声）。还是低调点（防止一会被疯狂打脸）
-![](https://imgkr2.cn-bj.ufileos.com/714a8dad-84d9-4ffd-8b5a-f802faa38e1f.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=sfQTwVdH5tCuGRLLmfBdAi6MrO8%253D&Expires=1596961382)
+![表情06](https://user-images.githubusercontent.com/26785201/89748705-1c9c3d00-daf7-11ea-923a-b25d9e0465ea.jpg)
 
 `Q`: 怎么去做？
 
@@ -227,7 +228,7 @@ module.exports = {
 看完这代码是不是有点懵（说好的保证让看懂的 😤）
 
 别着急，你听我辩解！！😷
-![](https://imgkr2.cn-bj.ufileos.com/4cc98b74-bf46-43ed-bddf-b5f3e502ff80.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=1Rs%252B1EAGEiLqEDsPVAjNVwrA8Tg%253D&Expires=1596961508)
+![表情07](https://user-images.githubusercontent.com/26785201/89748716-29209580-daf7-11ea-9dc4-4f00c6c4eeda.jpg)
 
 这里要先着重说下用到的几个`babel`包：
 
@@ -244,7 +245,7 @@ module.exports = {
 #### 完善 compiler.js
 
 在上面我们已经将`compiler.js`中会用到的函数占好位置，下面我们需要完善一下`compiler.js`，当然会用到`parser.js`中的一些方法（废话，不然我上面干嘛要先把`parser.js`写完～～）
-![](https://imgkr2.cn-bj.ufileos.com/5e9cd4de-d2c7-4879-be73-0409b317a889.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=smL4rdl8wg5tgISpbEjIRF1wHRA%253D&Expires=1596961635)
+![表情08](https://user-images.githubusercontent.com/26785201/89748721-32a9fd80-daf7-11ea-9a1e-82a643ed6be5.jpg)
 
 直接上代码：
 
@@ -341,7 +342,7 @@ emitFiles() {
 ```
 
 这里的`bundle`一大坨，什么鬼？
-![](https://imgkr2.cn-bj.ufileos.com/e2179db1-a23a-4cf7-9ba5-85591f71d3ff.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=t9aakeP7WQW13NVu56KXCwKZm0g%253D&Expires=1596961716)
+![表情09](https://user-images.githubusercontent.com/26785201/89748761-6edd5e00-daf7-11ea-8e41-fc87dcf3905c.gif)
 
 我们先来了解下`webpack`的文件 📦 机制。下面一段代码是经过`webpack`打包精简过后的代码：
 
@@ -389,7 +390,7 @@ emitFiles() {
 - `__webpack_require__` 模块加载，先判断 `installedModules` 是否已加载，加载过了就直接返回 `exports` 数据，没有加载过该模块就通过 `modules[moduleId].call(module.exports, module, module.exports, __webpack_require__)` 执行模块并且将 `module.exports` 给返回。
 
 （你上面说的这一坨又是什么鬼？我听不懂啊啊啊啊！！！）
-![](https://imgkr2.cn-bj.ufileos.com/1e348390-d96b-4862-99e3-679efcb97fd4.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=s8wu4JUN8sqvDBN54m76tQdRLrI%253D&Expires=1596961813)
+![表情10](https://user-images.githubusercontent.com/26785201/89748757-65ec8c80-daf7-11ea-88a2-d224579ed054.jpg)
 
 那我换个说法吧：
 
@@ -399,7 +400,7 @@ emitFiles() {
 - 通过`WEBPACK_REQUIRE_METHOD(0)`启动程序
 
 （小声 bb：怎么样，这样听懂了吧）
-![](https://imgkr2.cn-bj.ufileos.com/f9c56a67-bdcb-4952-b3dd-d29a13cd0164.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=A7d2V1LJ7yBJ7hq%252BA3LAPwROsJQ%253D&Expires=1596961909)
+![表情11](https://user-images.githubusercontent.com/26785201/89748754-5e2ce800-daf7-11ea-9911-5ea8d9c07293.jpg)
 
 #### lib/index.js 入口文件编写
 
@@ -453,7 +454,7 @@ new Compiler(options).run();
 ```
 
 和上面用`webpack`打包生成的`js`文件作下对比，是不是很相似呢？
-![](https://imgkr2.cn-bj.ufileos.com/0548df18-4bec-4300-ac02-8a5da66e5ffb.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=Oktqpkw6UHmUQktu2y6Ugn1aEP4%253D&Expires=1596961993)
+![表情12](https://user-images.githubusercontent.com/26785201/89748803-a815ce00-daf7-11ea-9ff7-d818f96fe3ad.gif)
 
 #### 来吧！展示
 
@@ -474,20 +475,20 @@ new Compiler(options).run();
 ```
 
 此时打开浏览器：
-![](https://imgkr2.cn-bj.ufileos.com/02327ea5-8da7-4669-b213-e14e077b6268.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=v%252BXAiZ1N%252B2%252BoLd1D1XbBdSjLq5s%253D&Expires=1596960289)
+<img width="434" alt="forestpack演示" src="https://user-images.githubusercontent.com/26785201/89748849-e57a5b80-daf7-11ea-8358-6d8960d14d2e.png">
 
 如你所愿，得到了我们预期的结果～
-![](https://imgkr2.cn-bj.ufileos.com/765940eb-2fca-45ba-9745-8d9afedee303.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=ohXD2zBJRbXlX4PNE9EkUyLqJas%253D&Expires=1596962082)
+![表情13](https://user-images.githubusercontent.com/26785201/89748832-d0053180-daf7-11ea-8adb-76ec8fd5aa8d.jpg)
 
 ## 总结
 
 通过对`webpack`构建流程的分析以及实现了一个简易的`forestpack`，相信你对`webpack`的构建原理已经有了一个清晰的认知！（当然，这里的`forestpack`和`webpack`相比还很弱很弱，，，，）
-![](https://imgkr2.cn-bj.ufileos.com/f8177cf8-8b12-4271-b4ea-1ccd5ada1b1b.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=WScIbtHRFyq6m%252BWqPTdL8twFOiA%253D&Expires=1596962480)
+![表情14](https://user-images.githubusercontent.com/26785201/89748837-d7c4d600-daf7-11ea-9b2d-cf6c0e93198f.gif)
 
 ## 参考
 
 本文是看过极客时间程柳锋老师的「玩转 webpack」课程后整理的。这里也十分推荐大家去学习这门课程～
-![](https://imgkr2.cn-bj.ufileos.com/3263c8a5-319e-4c4e-a263-45fe1cfb4709.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=H7d8OTXqEuaHg7txrT4UIr4Gq9g%253D&Expires=1596962725)
+![表情15](https://user-images.githubusercontent.com/26785201/89748843-deebe400-daf7-11ea-9c44-da39d1dfa8cf.jpg)
 
 ## ❤️ 爱心三连击
 
@@ -498,4 +499,4 @@ new Compiler(options).run();
 3.特殊阶段，带好口罩，做好个人防护。
 
 4.添加微信<b style="color: #ff6441">fs1263215592</b>，拉你进技术交流群一起学习 🍻
-![](https://imgkr2.cn-bj.ufileos.com/40ac6fd2-89cf-4fc6-b154-3c3fd4956f2d.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=3bxgYcPfdxDGcGIskOHykGXHqOo%253D&Expires=1596962818)
+![前端森林公众号二维码2](https://user-images.githubusercontent.com/26785201/89748866-faef8580-daf7-11ea-8fef-d4d62e0eaf6e.png)
